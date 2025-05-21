@@ -4,9 +4,8 @@ import numpy as np
 
 class CSVservices:
     def __init__(self):
-        self.data_path = "src\dataset\Mobile_Food_Facility_Permit.csv"
+        self.data_path = "src/dataset/Mobile_Food_Facility_Permit.csv"
         self.df = pd.read_csv(self.data_path)
-
 
     def get_df(self):
         return self.df
@@ -61,5 +60,20 @@ class CSVservices:
         d = 2 * r * np.arcsin(np.sqrt(a))
 
         return d
+    
+    def find_k_nearest(self, lat: float, lng: float, k: int, status: str = "APPROVED"):
+        filtered_df = self.df[self.df["Status"] == status]
 
+        filtered_df = filtered_df.dropna(subset=["Latitude", "Longitude"])
+
+        # calculate distance and add distance column
+        filtered_df["distance"] = filtered_df.apply(
+            lambda row: self.haversine_distance_formula(lng, lat, row["Longitude"], row["Latitude"]),
+            axis=1
+        )
+        k_nearest = filtered_df.sort_values("distance").head(k)
+        result = k_nearest.replace({np.nan: None})
+
+        return {"result": result.to_dict(orient="records")}
         
+

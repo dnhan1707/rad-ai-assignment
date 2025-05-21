@@ -34,5 +34,15 @@ def search_applicant_by_street_name(name: str):
         raise HTTPException(status_code=500, detail=f'Error with search_applicant, {str(e)}')
 
 
+@router.get("/search_k_nearest")
+def search_applicant_by_lat_lng(lat: float, lng: float, k: int, status: str = "APPROVED"):
+    try:
+        return csv_service.find_k_nearest(lat, lng, k, status)
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Error with search_applicant, {str(e)}')
+
+
+
 
 
