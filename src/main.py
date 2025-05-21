@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.api.endpoints.logging import router
+from src.api.endpoints.food_facility import router
 
 app = FastAPI(
     title="Food Facilities API"
