@@ -12,7 +12,7 @@ class FoodFacilityService:
         self.df = csv_services.get_df()
         if self.df is None:
             raise ValueError("DataFrame not loaded properly")
-        
+            
     async def search_by_name(self, name: str, status: Optional[str] = None):
         name_query = self.df["Applicant"].str.contains(name, case=False, na=False)
         filtered_df = self.df[name_query]
