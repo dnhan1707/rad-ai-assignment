@@ -6,6 +6,9 @@ start_time = time.time()
 reset_interval = 5
 limit = 10
 
+'''
+This function help prevent too many requests in a short time
+'''
 def rate_limit(response: Response) -> Response:
     global start_time
     global count

@@ -18,7 +18,7 @@ class FoodFacilityService:
         filtered_df = self.df[name_query]
 
         if(status):
-            filtered_df = filtered_df[filtered_df["Status"] == status]
+            filtered_df = filtered_df[filtered_df["Status"].str.upper() == status]
         
         result = filtered_df.replace({np.nan: None})
         return {"result": result.to_dict(orient="records")}
@@ -57,17 +57,21 @@ class FoodFacilityService:
 
         return d
     
-    async def find_k_nearest(self, lat: float, lng: float, k: int, status: str = "APPROVED"):
-        filtered_df = self.df[self.df["Status"] == status]
-        filtered_df = filtered_df.dropna(subset=["Latitude", "Longitude"])
+    async def find_k_nearest(self, lat: Optional[float] = None, lng: Optional[float] = None, k: int = 5, status: str = "APPROVED"):
+        filtered_df = self.df[self.df["Status"].str.upper() == status]
+        if(lng and lat):
+            filtered_df = filtered_df.dropna(subset=["Latitude", "Longitude"])
 
-        # calculate distance and add distance column
-        filtered_df["distance"] = filtered_df.apply(
-            lambda row: self.haversine_distance_formula(lng, lat, row["Longitude"], row["Latitude"]),
-            axis=1
-        )
-        k_nearest = filtered_df.sort_values("distance").head(k)
-        result = k_nearest.replace({np.nan: None})
+            # calculate distance and add distance column
+            filtered_df["distance"] = filtered_df.apply(
+                lambda row: self.haversine_distance_formula(lng, lat, row["Longitude"], row["Latitude"]),
+                axis=1
+            )
+            k_nearest = filtered_df.sort_values("distance").head(k)
+            result = k_nearest.replace({np.nan: None})
 
-        return {"result": result.to_dict(orient="records")}
+            return {"result": result.to_dict(orient="records")}
+        else:
+            return {"result": filtered_df.to_dict(orient="records")}
+
         
