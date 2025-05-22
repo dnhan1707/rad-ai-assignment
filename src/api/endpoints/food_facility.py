@@ -34,9 +34,9 @@ def create_food_facility_router() -> APIRouter:
 
     @food_facility_router.get("/nearby")
     async def get_nearby_food_facilities(
-        lat: float, 
-        lng: float, 
-        limit: int, 
+        lat: Optional[float] = None, 
+        lng: Optional[float] = None, 
+        limit: int = 5, 
         status: str = "APPROVED"
     ):
         """

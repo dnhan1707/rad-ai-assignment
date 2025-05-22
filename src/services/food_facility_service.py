@@ -72,6 +72,8 @@ class FoodFacilityService:
 
             return {"result": result.to_dict(orient="records")}
         else:
-            return {"result": filtered_df.to_dict(orient="records")}
+            filtered_df = filtered_df.head(k)
+            result = filtered_df.replace({np.nan: None})
+            return {"result": result.to_dict(orient="records")}
 
         
