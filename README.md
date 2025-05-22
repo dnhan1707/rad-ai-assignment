@@ -110,11 +110,11 @@ All endpoints are wrapped in `try-except` blocks to handle errors gracefully.
         5) Access 'http://localhost:8080/docs' to try it out. (if that link does not work, try: 'http://0.0.0.0:8080')
 
     + From terminal: 
-        1) navigate to the root of the project
+        1) Navigate to the root of the project
         2) Run 'python3 -m venv venv' to create 'venv'
         3) Activate virtual environemt: 
-            Mac -> run 'source venv/bin/activate' 
-            Window -> run 'venv\Scripts\activate'  
+            - Mac -> run 'source venv/bin/activate' 
+            - Window -> run 'venv\Scripts\activate'  
         4) Download dependencies: 
             'pip install -r requirements-dev.txt' and 'pip install -r requirements.txt'
         5) Run 'uvicorn src.main:app --reload' 
@@ -122,27 +122,28 @@ All endpoints are wrapped in `try-except` blocks to handle errors gracefully.
 
 ## Critique Section
 
-1) **What would you have done differently if you had spent more time on this?**
+1) **What would you have done differently if you had engaged in this more time?**
 
-- **Backend**: I plan to have more dynamic searching, filtering functionalities. I also want to implement AI by MCP (Model Context Protocol) or building a RAG model, this allow user to ask more human-like question about the dataset and still ensure the high-quality human-friendly response.
+- **Backend**: I would have worked on a more dynamic search and filtering capability. In addition, I wanted to incorporate AI with MCP (Model Context Protocol) or a RAG (Retrieval-Augmented Generation) model, so users could ask more natural human questions on the dataset while it still produced quality, user-friendly responses. 
 
-- **Frontend**: I would like to build a map-based website that works like a Google Map for Location of Mobile Food Facility, there  
-will be a filtering side bar and a chatbot to talk with MCP or RAG model. The map will be updated based on users need.
+- **Frontend**: I was picturing a map-based version of Google Maps for finding mobile food facilities. The map would include a filtering sidebar and a chatbot to connect the MCP or RAG model to the user. The map would shift dynamically depending on the user's requests and needs.
 
-2) **What are the trade-offs you might have made?**
+2) **What trade-offs did you potentially consider?**
 
-- **Dependencies management**: the application has  'requirements-dev.txt' and 'requirements.txt' from where user have to download dependencies. Another common way is using 'Pipenv' as the dependency manager, however, because of the small amount of packages and I can have full control over those packages, I decide to use the 'requirements.txt' file way.
+- **Dependency management**: The project uses 'requirements.txt' and 'requirements-dev.txt' files to manage dependencies. Other dependency management tools like Pipenv exist, but I chose to use the 'requirements.txt' and 'requirements-dev.txt' files because the number of total dependencies was small and I could control the dependencies as one developer. In this case, I saw an advantage to being less complicated and more transparent.
 
-- **Haversine formula instead of Google Map API**: I decided implement this function to calculate the distance between 2 locations with give longtitude and latitude because it is all we need, Google Map provide many others services that does not align much with the project, therefore, to save the cost and keep the simplicity I believe using Haversine function is the best way.
+- **Haversine formula instead of Google Map API**: I used the Haversine formula to calculate the distance between two locations using the geographical latitude and longitude. While Google Maps has better features, a lot of them are not needed for this project. Using the Haversine formula saves some cost and keeps the application lightweight and focused on core functionality.
 
-3) **What are the things you left out?**
+3) **What are the things I left out?**
+- **User interface**: I did not develop a front end, but an excellent web UI, with a responsive and interactive map, would greatly improve the user experience.
+- **Data persistence**: My application uses CSV files directly instead of using a proper database. Instead on properly designed production code, I would have selected PostgreSQL to be used with PostGIS for geospatial querying, which would allow much better performance on location-based searches.
+- **Authentication & Authorisation**: The app does not have any user management, or more importantly, API authentication (such as JWT or OAuth2), which would be critical for the realistic world.
+- **Monitoring & Logging**: I do not have any structured standardized logs or monitoring to see application health or user interaction, meaning that in production I have little observability or ability to debug.
 
-- Things that I left out including building UI and backend hosting, currently the application ask user to access the API through FastAPI on localhost.
+4. **What are the shortcomings of your implementations and how would you address them if we were required to scale the application for a large number of users?**  
 
-4) **What are the problems with your implementation and how would you solve them if we had to scale the application to a large number of users?**  
+- **Limited Functionality**: The current version does not include the standard CRUD operations (i.e. creating a record, updating a record, deleting a record) but only allows searching. 
 
-- There is a major limitation with the current application, it only allow searching but not other CRUD such as creating, updating, deleting. 
+- **No Route Protection**: There is no middleware, or CORS, for restricting access to the API. I intended to put this in place, but ran out of time and there were so many different edge cases making it difficult to consider.
 
-- Also there are not routes protection such as using Middleware or CORS to limit the API access, this is on purpose because of the inconsistency and complexity. 
-
-- Everything is currently on Local, we can improve this by hosting FastAPI based project on AWS EC2. This also allow the application to habdle larger number of users because it provides more RAM, CPU, and using t2.micro system normally is good enough for scalable project, its horizontal scaling is also extremely good thanks to their Auto Scaling Group handling traffic spikes. Using AWS service allow us to remove the 'rate limit function' in the app and still ensure the smooth response from backend.
+- **Local Deployment**: The application is locally hosted and to scale for a larger audience I would deploy this system on AWS EC2. With EC2 you have the option to scale up with more CPU and RAM, and a t2.micro instance is sufficient for very small/first production. AWS supports horizontal scaling with Auto Scaling Groups to manage spikes in traffic effectively and efficiently. The need for the custom rate limiting function we were using between requests would no longer be needed and we could maintain a smooth and reliable performance.
