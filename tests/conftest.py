@@ -3,7 +3,6 @@ from src.services.food_facility_service import FoodFacilityService
 
 @pytest.fixture
 def service():
-    # Provide a FoodFacilityService instance for tests
     return FoodFacilityService()
 
 @pytest.fixture
@@ -17,6 +16,24 @@ def oakland_coordinates():
     return {"lng": -122.2712, "lat": 37.8044}
 
 @pytest.fixture
-def test_search_term():
-    # Common search term for food facility tests
-    return "datam"
+def valid_search_name_status():
+    name = "datam"
+    status = "APPROVED"
+    return {"name": name, "status": status}
+
+@pytest.fixture
+def valid_street_name():
+    street_name = "san"
+    return street_name
+
+
+@pytest.fixture
+def invalid_search_name_status():
+    name = "datam"
+    status = "REQUIRED"
+    return {"name": name, "status": status}
+
+@pytest.fixture
+def invalid_name():
+    name = "nonexistentfacility"
+    return name

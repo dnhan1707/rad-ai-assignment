@@ -3,8 +3,8 @@ import time
 
 count = 0
 start_time = time.time()
-reset_interval = 10
-limit = 5
+reset_interval = 5
+limit = 10
 
 def rate_limit(response: Response) -> Response:
     global start_time
