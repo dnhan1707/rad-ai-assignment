@@ -138,7 +138,6 @@ All endpoints are wrapped in `try-except` blocks to handle errors gracefully.
 - **User interface**: I did not develop a front end, but an excellent web UI, with a responsive and interactive map, would greatly improve the user experience.
 - **Data persistence**: My application uses CSV files directly instead of using a proper database. Instead on properly designed production code, I would have selected PostgreSQL to be used with PostGIS for geospatial querying, which would allow much better performance on location-based searches.
 - **Authentication & Authorisation**: The app does not have any user management, or more importantly, API authentication (such as JWT or OAuth2), which would be critical for the realistic world.
-- **Monitoring & Logging**: I do not have any structured standardized logs or monitoring to see application health or user interaction, meaning that in production I have little observability or ability to debug.
 
 4. **What are the shortcomings of your implementations and how would you address them if we were required to scale the application for a large number of users?**  
 
