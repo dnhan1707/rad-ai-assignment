@@ -107,7 +107,7 @@ All endpoints are wrapped in `try-except` blocks to handle errors gracefully.
         2) Open your Docker Desktop
         3) Run 'docker build -t radaiassignment:latest .'
         4) Run 'docker run --name radassignment_run_1 -p 8080:8080 radaiassignment:latest'
-        5) Access 'http://localhost:8080/docs' to try it out. (if that link does not work, try: 'http://0.0.0.0:8080')
+        5) Access 'http://localhost:8080/docs' to try it out. (if that link does not work, try: 'http://0.0.0.0:8080/docs')
 
     + From terminal: 
         1) Navigate to the root of the project
