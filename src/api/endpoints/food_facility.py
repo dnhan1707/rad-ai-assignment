@@ -36,7 +36,7 @@ def create_food_facility_router() -> APIRouter:
     async def get_nearby_food_facilities(
         lat: float, 
         lng: float, 
-        limit: int = Query(..., alias="k"), 
+        limit: int, 
         status: str = "APPROVED"
     ):
         """

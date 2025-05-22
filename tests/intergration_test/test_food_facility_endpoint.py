@@ -52,30 +52,30 @@ def test_search_by_street_name(testing_app, valid_street_name):
     assert len(data["result"]) > 0
 
 
-def test_search_k_nearest(testing_app, sf_coordinates, k=5):
+def test_search_k_nearest(testing_app, sf_coordinates, limit=5):
     # Test k-nearest search with SF coordinates
     response = testing_app.get(
         f'/food-facilities/nearby?'
-        f'lat={sf_coordinates["lat"]}&lng={sf_coordinates["lng"]}&k={k}'
+        f'lat={sf_coordinates["lat"]}&lng={sf_coordinates["lng"]}&limit={limit}'
     )
     
     assert response.status_code == 200
     data = response.json()
     assert "result" in data
-    assert len(data["result"]) == k  
+    assert len(data["result"]) == limit  
 
 
-def test_search_k_nearest_with_status(testing_app, sf_coordinates, k=3, status="APPROVED"):
+def test_search_k_nearest_with_status(testing_app, sf_coordinates, limit=3, status="APPROVED"):
     # Test k-nearest with status filter
     response = testing_app.get(
         f'/food-facilities/nearby?'
         f'lat={sf_coordinates["lat"]}&lng={sf_coordinates["lng"]}'
-        f'&k={k}&status={status}'
+        f'&limit={limit}&status={status}'
     )
     
     assert response.status_code == 200
     data = response.json()
     assert "result" in data
-    assert len(data["result"]) == k
+    assert len(data["result"]) == limit
     for facility in data["result"]:
         assert facility["Status"] == "APPROVED"
